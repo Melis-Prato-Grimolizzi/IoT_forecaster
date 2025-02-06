@@ -146,7 +146,6 @@ class Forecaster:
                         self.updateData(new_data, periods=12)
                         self.fit_predict(periods=12)
                         self.postForecast()
-                        break
                 time.sleep(1)
         except KeyboardInterrupt:
             print("Forecaster exiting...")
