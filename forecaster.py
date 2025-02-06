@@ -140,6 +140,8 @@ class Forecaster:
                         self.getHistoricalData(3600)
                         print("Historical data collected!")
                         self.transformData()
+                        self.fit_predict(periods=12)
+                        self.postForecast()
                     else:
                         self.getHistoricalData(12)
                         new_data = self.transformNewData()
@@ -149,7 +151,8 @@ class Forecaster:
                         break
                 time.sleep(1)
         except KeyboardInterrupt:
-            print("Collector exiting...")
+            print("Forecaster exiting...")
+            time.sleep(2)
 
 
 if __name__ == '__main__':
