@@ -33,7 +33,7 @@ class Forecaster:
         self.bearer = 'Bearer ' + response.text
         print(f"DEBUG: Response for server (Login): {response.text}")
 
-    def getHistoricalData(self, periods=12):
+    def     getHistoricalData(self, periods=12):
         session = Http.getSession()
         url = self.config['Urls']['GetHistory']
         url = self.base_url + url + str(periods)
@@ -138,6 +138,7 @@ class Forecaster:
                     timestamp = time.time()
                     if self.data.shape[0] == 0:
                         self.getHistoricalData(3600)
+                        print("Historical data collected!")
                         self.transformData()
                     else:
                         self.getHistoricalData(12)
