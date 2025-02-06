@@ -79,8 +79,7 @@ class Forecaster:
             self.datas[df] = self.datas[df].iloc[periods:]
             self.datas[df] = pd.concat([self.datas[df], new_data[df]]).reset_index(drop=True)
 
-        print('Data updated')
-        print(self.datas[1])
+        print('Data updated!')
 
     def postForecast(self):
         session = Http.getSession()
@@ -93,7 +92,7 @@ class Forecaster:
         json_data = json.dumps(self.forecasted_data.values.tolist())
         print(f"DEBUG: Data to post: {json_data}")
 
-        print(json_data)
+        # print(json_data)
         response = session.post(url, headers=header, data=json_data)
         print(f"DEBUG: Response for server (Post forecast): {response.text}")
 
@@ -131,21 +130,25 @@ class Forecaster:
 
     def loop(self):
         timestamp = time.time()
-        while True:
-            if time.time() - timestamp >= 10:
-                timestamp = time.time()
-                if self.data.shape[0] == 0:
-                    self.getHistoricalData(3600)
-                    self.transformData()
-                else:
-                    self.getHistoricalData(12)
-                    new_data = self.transformNewData()
-                    self.updateData(new_data, periods=12)
-                    self.fit_predict(periods=12)
-                    self.postForecast()
-                    break
-            time.sleep(1)
-            print("Sleeping...")
+        first = True
+        try:
+            while True:
+                if (time.time() - timestamp >= 7200) or first:
+                    first = False
+                    timestamp = time.time()
+                    if self.data.shape[0] == 0:
+                        self.getHistoricalData(3600)
+                        self.transformData()
+                    else:
+                        self.getHistoricalData(12)
+                        new_data = self.transformNewData()
+                        self.updateData(new_data, periods=12)
+                        self.fit_predict(periods=12)
+                        self.postForecast()
+                        break
+                time.sleep(1)
+        except KeyboardInterrupt:
+            print("Collector exiting...")
 
 
 if __name__ == '__main__':
