@@ -90,8 +90,6 @@ class Forecaster:
             'Content-Type': 'application/json'
         }
         json_data = json.dumps(self.forecasted_data.values.tolist())
-        print(f"DEBUG: Data to post: {json_data}")
-
         # print(json_data)
         response = session.post(url, headers=header, data=json_data)
         print(f"DEBUG: Response for server (Post forecast): {response.text}")
