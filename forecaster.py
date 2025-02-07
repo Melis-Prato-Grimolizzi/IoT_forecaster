@@ -93,6 +93,8 @@ class Forecaster:
         # print(json_data)
         response = session.post(url, headers=header, data=json_data)
         print(f"DEBUG: Response for server (Post forecast): {response.text}")
+        self.forecasted_data = pd.DataFrame()
+        print("Flushed forecasted data!")
 
     def fit_predict(self, periods=12):
         for slot_history in self.datas.values():
