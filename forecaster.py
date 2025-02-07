@@ -133,7 +133,7 @@ class Forecaster:
         first = True
         try:
             while True:
-                if (time.time() - timestamp >= 7200) or first:
+                if (time.time() - timestamp >= 1800) or first:
                     first = False
                     timestamp = time.time()
                     if self.data.shape[0] == 0:
