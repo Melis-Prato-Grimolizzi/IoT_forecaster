@@ -33,7 +33,7 @@ class Forecaster:
         self.bearer = 'Bearer ' + response.text
         print(f"DEBUG: Response for server (Login): {response.text}")
 
-    def     getHistoricalData(self, periods=12):
+    def getHistoricalData(self, periods=12):
         session = Http.getSession()
         url = self.config['Urls']['GetHistory']
         url = self.base_url + url + str(periods)
@@ -122,10 +122,6 @@ class Forecaster:
         ret_forecast['ds'] = forecast['ds']
         ret_forecast['parking_id'] = forecast['parking_id']
         ret_forecast['yhat_bin'] = forecast['yhat_bin']
-        # print(ret_forecast)
-        # plt.plot(ret_forecast['ds'], ret_forecast['yhat_bin'], label='Previsioni')
-        # plt.title('Predictions')
-        # plt.show()
         return ret_forecast.iloc[0:periods]
 
     def loop(self):
